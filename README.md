@@ -13,4 +13,10 @@
  -  涉及文件：
     - caigou.py 爬虫代码文件
     - Tools/compute.py 工具类
-
+    
+## TouTiao
+ -  内容：头条解密及热榜爬取
+ -  jinritoutiao.py 热榜爬取代码
+ -  as_cp.js/touTiaoSign.js 解密js
+ -  toutiao_decode.py 执行js文件代码
+ -  toutiaonews.py 新闻爬取代码(由于头条缓存机制，每次获取数据变化不大，建议定时爬取每日更新内容，待补充)
