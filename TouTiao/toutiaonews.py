@@ -8,10 +8,10 @@
 @Desc    ：
 """
 
-import requests,time
+from urllib.parse import urlencode, urljoin
+import requests
+import time
 import toutiao_decode
-from urllib.parse import urlencode,urljoin
-
 
 
 class TouTiao(object):
@@ -21,8 +21,8 @@ class TouTiao(object):
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US; AppleWebKit/534.16 (KHTML, '
                           'like Gecko) Chrome/10.0.648.127 Safari/534.16',
-            'Referer':'https://m.toutiao.com/?source=m_redirect&channel=tech',
-            'Host':'m.toutiao.com'
+            'Referer': 'https://m.toutiao.com/?source=m_redirect&channel=tech',
+            'Host': 'm.toutiao.com'
         }
         self.params = {
             'tag': 'news_hot',
@@ -35,20 +35,18 @@ class TouTiao(object):
             'aid': '1698'
         }
 
-
     def get_as_cp(self):
         result = toutiao_decode.get_as_cp()
         current_timestamp = time.time()
         five_hours_ago_timestamp = current_timestamp - 10 * 60 * 60
-        self.params['max_time'] =self.params['i'] = round(time.time())
-        self.params['min_behot_time'] = round(five_hours_ago_timestamp)
+        self.params['max_time'] = self.params['i'] = str(round(time.time()))
+        self.params['min_behot_time'] = str(round(five_hours_ago_timestamp))
         # url = self.build_url(self.hot_url,self.params) +'&as=' + result[0] + '&cp=' + result[1]
         url = self.url + '&as=' + result[0] + '&cp=' + result[1]
         # url = 'https://m.toutiao.com/list/?tag=__all__&max_time=0&min_behot_time=0&ac=wap&count=20&format=json_raw&i=&aid=1698&'
         # com_url = url + 'as=' + result[0] + '&cp=' + result[1]
         print(url)
         return url
-
 
     def build_url(self, base_url, params):
         """
@@ -65,9 +63,8 @@ class TouTiao(object):
         return complete_url
 
     def get_json(self):
-
         news_url = self.get_as_cp()
-        res = requests.get(url=news_url,headers=self.headers)
+        res = requests.get(url=news_url, headers=self.headers)
         res.encoding = 'gbk'
         print(res.json())
         news_data = res.json()['data']
@@ -76,14 +73,16 @@ class TouTiao(object):
             news_dict = {
                 'title': data.get('title'),
                 # 'url': data.get('url')
-                'url': 'https://www.toutiao.com'+ data.get('source_url')
+                'url': 'https://www.toutiao.com' + data.get('source_url')
             }
             news_list.append(news_dict)
             print(news_dict)
 
+
 def main():
     toutiao_news = TouTiao()
     toutiao_news.get_json()
+
 
 if __name__ == '__main__':
     main()

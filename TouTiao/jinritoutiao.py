@@ -6,7 +6,7 @@
 @File    ：jinritoutiao.py
 @Author  ：wangxw
 @Date    ：2023/7/14 14:18
-@Desc    ：
+@Desc    ：爬取头条热榜数据
 """
 import csv
 import requests
