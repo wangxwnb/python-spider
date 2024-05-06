@@ -19,6 +19,7 @@ from fontTools.ttLib import ttFont
 from Tools.compute import compute
 from aip import AipOcr
 from lxml import etree
+from secret import APP_ID, API_KEY, SECRET_KEY
 
 
 class CaiGou(object):
@@ -30,14 +31,13 @@ class CaiGou(object):
         }
         self.list_data = []
         """ 你的 APPID AK SK """
-        self.APP_ID = ''
-        self.API_KEY = ''
-        self.SECRET_KEY = ''
+        self.APP_ID = APP_ID
+        self.API_KEY = API_KEY
+        self.SECRET_KEY = SECRET_KEY
 
     def get_unicode_list(self, page=1):
         """
         获取字符集
-        @param page: 爬取的页码
         @return: 字符集列表，网页源码
         """
         url = self.url + str(page) + '.html'
